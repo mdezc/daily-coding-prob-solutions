@@ -1,4 +1,4 @@
-package p0002;
+package P0002;
 
 import java.util.Arrays;
 
