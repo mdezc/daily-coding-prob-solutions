@@ -12,6 +12,11 @@ public enum Utils {
         printLn(String.valueOf(isCorrect), Arrays.toString(input), Arrays.toString(expected), Arrays.toString(actual));
     }
 
+    public static void printResult(int[] input, int expected, int actual) {
+        boolean isCorrect = expected == actual;
+        printLn(String.valueOf(isCorrect), Arrays.toString(input), String.valueOf(expected), String.valueOf(actual));
+    }
+
     public static void printResult(int[] input, boolean expected, boolean actual) {
         boolean isCorrect = expected == actual;
         printLn(String.valueOf(isCorrect), Arrays.toString(input), String.valueOf(expected), String.valueOf(actual));
