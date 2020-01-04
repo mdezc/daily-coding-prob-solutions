@@ -22,7 +22,16 @@ public enum Utils {
         printLn(String.valueOf(isCorrect), String.valueOf(input), String.valueOf(expected), String.valueOf(actual));
     }
 
+    public static void printResult(final String expected, final String actual) {
+        boolean isCorrect = expected.equals(actual);
+        printLn(String.valueOf(isCorrect), expected, actual);
+    }
+
     private static void printLn(String isCorrect, String input, String expected, String actual) {
         System.out.println("isCorrect=" + toUpperCase(isCorrect) + " - Input={" + input + "} Expected={" + expected + "} Actual={" + actual + "}");
+    }
+
+    private static void printLn(String isCorrect, String expected, String actual) {
+        System.out.println("isCorrect=" + toUpperCase(isCorrect) + " - Expected={" + expected + "} Actual={" + actual + "}");
     }
 }
