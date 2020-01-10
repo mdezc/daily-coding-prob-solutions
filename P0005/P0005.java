@@ -1,7 +1,5 @@
 package P0005;
 
-import utils.Utils;
-
 import static utils.Utils.printResult;
 
 public class P0005 {
@@ -25,8 +23,8 @@ public class P0005 {
         Pair<Integer, Integer> input2 = cons(3, 4);
         int expected2 = 4;
 
-        Utils.printResult(input1, expected1, car(cons(3, 4)));
-        Utils.printResult(input2, expected2, cdr(cons(3, 4)));
+        printResult(input1, expected1, car(cons(3, 4)));
+        printResult(input2, expected2, cdr(cons(3, 4)));
     }
 
     private static class Pair<T, U> {
