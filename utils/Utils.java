@@ -7,6 +7,11 @@ import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 public enum Utils {
     ;
 
+    public static <T, U> void printResult(U input, final T expected, final T actual) {
+        boolean isCorrect = expected == actual;
+        printLn(String.valueOf(isCorrect), input.toString(), String.valueOf(expected), String.valueOf(actual));
+    }
+
     public static void printResult(int[] input, int[] expected, int[] actual) {
         boolean isCorrect = Arrays.equals(expected, actual);
         printLn(String.valueOf(isCorrect), Arrays.toString(input), Arrays.toString(expected), Arrays.toString(actual));
