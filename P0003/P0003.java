@@ -1,6 +1,7 @@
 package P0003;
 
 import java.util.Stack;
+import utils.node.BinaryNode;
 
 import static utils.Utils.printResult;
 
@@ -19,34 +20,34 @@ public class P0003 {
 
     public static void main(String[] args) {
         String expected = "left.left";
-        Node root = new Node("root",
-                new Node("left", new Node("left.left", null ,null), null),
-                new Node("right", null, null)
+        BinaryNode root = new BinaryNode("root",
+                new BinaryNode("left", new BinaryNode("left.left", null ,null), null),
+                new BinaryNode("right", null, null)
         );
-        Node tree = deserialize(serialize(root));
+        BinaryNode tree = deserialize(serializeTree(root));
         printResult(expected, solution(tree));
     }
 
-    private static String solution(Node node) {
-        String serialized = serialize(node);
-        Node deserialized = deserialize(serialized);
+    private static String solution(BinaryNode binaryNode) {
+        String serialized = serializeTree(binaryNode);
+        BinaryNode deserialized = deserialize(serialized);
         return deserialized.left.left.val;
     }
 
-    private static String serialize(Node node) {
-        if (node == null) {
+    public static String serializeTree(BinaryNode binaryNode) {
+        if (binaryNode == null) {
             return "";
         }
-        return node.val + "(" + serialize(node.left) + ")" + "(" + serialize(node.right) + ")";
+        return binaryNode.val + "(" + serializeTree(binaryNode.left) + ")" + "(" + serializeTree(binaryNode.right) + ")";
     }
 
-    private static Node deserialize(String string) {
+    private static BinaryNode deserialize(String string) {
         if ("()".equals(string) || "".equals(string)) {
             return null; // for empty nodes
         }
 
         String nodeContent = string.startsWith("(") ? string.substring(1, string.length()-1) : string; // for root vs nodes;
-        return new Node(nodeContent.substring(0, nodeContent.indexOf('(')),
+        return new BinaryNode(nodeContent.substring(0, nodeContent.indexOf('(')),
                 deserialize(extractContentForNodeNumber(nodeContent, 1)),
                 deserialize(extractContentForNodeNumber(nodeContent, 2)));
     }
@@ -72,17 +73,5 @@ public class P0003 {
         }
 
         return null; // should never happen unless string is malformed
-    }
-
-    static class Node {
-        String val;
-        Node left;
-        Node right;
-
-        Node(String val, Node left, Node right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
     }
 }
