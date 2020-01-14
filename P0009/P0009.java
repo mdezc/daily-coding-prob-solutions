@@ -36,14 +36,17 @@ public class P0009 {
         if (index > input.length - 1 ) {
             return accumulated;
         }
+
+        final int firstNum = Math.max(input[index], 0);
         if (input.length - 1 == index) {
-            return accumulated + input[index];
+            return accumulated + firstNum;
         }
 
-        if (input[index] > input[index + 1]) {
-            return sumHighestOfNextTwoAvailable(accumulated + input[index], input, index + 2);
-        }
+        final int secondNum = Math.max(input[index + 1], 0);
 
-        return sumHighestOfNextTwoAvailable(accumulated + input[index + 1], input, index + 3);
+        if (secondNum > firstNum) {
+            return sumHighestOfNextTwoAvailable(accumulated + secondNum, input, index + 3);
+        }
+        return sumHighestOfNextTwoAvailable(accumulated + firstNum, input, index + 2);
     }
 }
