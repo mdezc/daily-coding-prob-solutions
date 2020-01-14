@@ -41,7 +41,7 @@ public class P0003 {
         return binaryNode.val + "(" + serializeTree(binaryNode.left) + ")" + "(" + serializeTree(binaryNode.right) + ")";
     }
 
-    private static BinaryNode deserialize(String string) {
+    public static BinaryNode deserialize(String string) {
         if ("()".equals(string) || "".equals(string)) {
             return null; // for empty nodes
         }

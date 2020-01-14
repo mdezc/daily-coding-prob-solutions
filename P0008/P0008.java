@@ -1,5 +1,8 @@
 package P0008;
 
+import utils.node.BinaryNode;
+
+import static P0003.P0003.deserialize;
 import static utils.Utils.printResult;
 
 public class P0008 {
@@ -18,18 +21,34 @@ public class P0008 {
     //  / \
     // 1   1
 
-    private static int leaf_solution = 0;
-
     public static void main(String[] args) {
-        int input = 4; // # of steps
-        int expected = 5; // unique ways
-        int[] stepSizeOptions = new int[]{1, 2};
+        String serializedTree = "0(1()())(0(1(1()())(1()()))(0()()))";
+        BinaryNode tree = deserialize(serializedTree);  // from P0003
 
-        printResult(input, expected, solution(input, stepSizeOptions));
+        printResult(serializedTree, 5, solution(tree));
     }
 
-    private static int solution(final int maxStepNumber, final int[] stepSizeOptions) {
-
+    private static int solution(final BinaryNode tree) {
+        if (tree == null) {
+            return 0;
+        }
+        if (isUnival(tree)) {
+            return 1 + solution(tree.left) + solution(tree.right);
+        }
+        return solution(tree.left) + solution(tree.right);
     }
 
+    private static boolean isUnival(final BinaryNode tree) {
+        if (tree.left == null && tree.right == null) {
+            return true; // no children
+        }
+        if (childNullOrSameAsParent(tree.val, tree.right) && childNullOrSameAsParent(tree.val, tree.left)) {
+            return isUnival(tree.right) && isUnival(tree.left);
+        }
+        return false;
+    }
+
+    private static boolean childNullOrSameAsParent(final String parentVal, final BinaryNode child) {
+        return child == null || child.val.equals(parentVal);
+    }
 }
