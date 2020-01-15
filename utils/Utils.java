@@ -8,7 +8,7 @@ public enum Utils {
     ;
 
     public static <T, U> void printResult(U input, final T expected, final T actual) {
-        boolean isCorrect = expected == actual;
+        boolean isCorrect = expected.equals(actual);
         printLn(String.valueOf(isCorrect), input.toString(), String.valueOf(expected), String.valueOf(actual));
     }
 
