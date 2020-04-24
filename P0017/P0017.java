@@ -42,56 +42,42 @@ public class P0017 {
         printResult(input, expected, solution(input));
     }
 
-    private static int solution(final String input) {
-        return findLongestPath(input);
-    }
-
-    private static int findLongestPath(String input) {
+    private static int solution(String input) {
         int maxLength = 0;
+        Stack<String> namePerLevel = new Stack<>();
 
-        Stack<String> lengthPerLevel = new Stack<>();
-        List<String> linesArr = Arrays.asList(input.split("\n"));
-
-        for (String line : linesArr) {
-            // file
+        for (String line : input.split("\n")) {
+            String objectName = line.replaceAll("\t", "");
             if (line.contains(".")) {
-                String path = pathToHere(lengthPerLevel) + objectName(line);
+                // is a file
+                String path = pathToHere(namePerLevel) + objectName;
                 if (path.length() > maxLength) {
                     System.out.println(String.format("Replacing maxLength %s with new %s from %s", maxLength, path.length(), path));
                     maxLength = path.length();
                 }
-                continue;
-            }
-            // directory
-            int thisLineIndent = thisLineIndentLevel(line);
+            } else {
+                // is a directory
+                int thisLineIndent = line.split("\t").length;
 
-            if (thisLineIndent > lengthPerLevel.size()) {
-                lengthPerLevel.push(objectName(line));
-                continue;
-            }
-            if (thisLineIndent == lengthPerLevel.size()) {
-                lengthPerLevel.pop();
-                lengthPerLevel.push(objectName(line));
-                continue;
-            }
+                if (thisLineIndent > namePerLevel.size()) {
+                    namePerLevel.push(objectName);
+                    continue;
+                }
 
-            int diffInLevels = lengthPerLevel.size() - thisLineIndent;
-            for (int i = 0; i < diffInLevels; i++) {
-                lengthPerLevel.pop();
+                if (thisLineIndent == namePerLevel.size()) {
+                    namePerLevel.pop();
+                    namePerLevel.push(objectName);
+                    continue;
+                }
+
+                int diffInLevels = namePerLevel.size() - thisLineIndent;
+                for (int i = 0; i < diffInLevels; i++) {
+                    namePerLevel.pop();
+                }
+                namePerLevel.push(objectName);
             }
-            lengthPerLevel.push(objectName(line));
         }
         return maxLength;
-    }
-
-
-    private static int thisLineIndentLevel(String line) {
-        return line.split("\t").length;
-    }
-
-
-    private static String objectName(String line) {
-        return line.replaceAll("\t", "");
     }
 
     private static String pathToHere(Stack<String> lengthPerLevel) {
@@ -100,8 +86,8 @@ public class P0017 {
         do {
             stringList.add(clone.pop());
         } while (!clone.isEmpty());
-        Collections.reverse(stringList);
-        StringJoiner stringJoiner = new StringJoiner("/", "", "/");
+        Collections.reverse(stringList); // friendly printing
+        StringJoiner stringJoiner = new StringJoiner("/", "", "/"); // account for path structure
         stringList.forEach(stringJoiner::add);
         return stringJoiner.toString();
     }
