@@ -37,6 +37,11 @@ public enum Utils {
         printLn(String.valueOf(isCorrect), expected, actual);
     }
 
+    public static void printResult(final int expected, final int actual) {
+        boolean isCorrect = expected == actual;
+        printLn(String.valueOf(isCorrect), String.valueOf(expected), String.valueOf(actual));
+    }
+
     private static void printLn(String isCorrect, String input, String expected, String actual) {
         System.out.println("isCorrect=" + toUpperCase(isCorrect) + " - Input={" + input + "} Expected={" + expected + "} Actual={" + actual + "}");
     }
