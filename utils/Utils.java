@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
@@ -35,6 +36,11 @@ public enum Utils {
     public static void printResult(final String expected, final String actual) {
         boolean isCorrect = expected.equals(actual);
         printLn(String.valueOf(isCorrect), expected, actual);
+    }
+
+    public static void printResult(final List<String> expected, final List<String> actual) {
+        boolean isCorrect = expected.containsAll(actual) && actual.containsAll(expected);
+        printLn(String.valueOf(isCorrect), expected.toString(), actual.toString());
     }
 
     public static void printResult(final int expected, final int actual) {
